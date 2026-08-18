@@ -22,10 +22,10 @@ def search_items(q: str = Query(..., min_length=1), db: Session = Depends(get_db
     Fix should use parameterized queries: text("SELECT * FROM items WHERE name LIKE :pattern")
     or SQLAlchemy ORM filter: db.query(Item).filter(Item.name.ilike(f"%{q}%")).all()
     """
-    # VULNERABLE: Direct string formatting into raw SQL
-    raw_query = f"SELECT id, name, description, price, stock, sku, created_at FROM items WHERE name LIKE '%{q}%'"
+    # SECURE: Use parameterized query to prevent SQL injection
+    query = text("SELECT id, name, description, price, stock, sku, created_at FROM items WHERE name LIKE :pattern")
     
-    result = db.execute(text(raw_query))
+    result = db.execute(query, {'pattern': f'%{q}%'})
     rows = result.fetchall()
     
     items = []
