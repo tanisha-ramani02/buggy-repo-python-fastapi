@@ -22,18 +22,17 @@ def export_inventory_csv(db: Session, file_path: str) -> int:
     """
     items = db.query(Item).all()
     
-    # LEAK: File opened directly without closing or context manager
-    f = open(file_path, "w", newline="", encoding="utf-8")
-    _ACTIVE_HANDLES.append(f)
-    writer = csv.writer(f)
-    writer.writerow(["ID", "Name", "SKU", "Price", "Stock"])
-    
-    count = 0
-    for item in items:
-        writer.writerow([item.id, item.name, item.sku, item.price, item.stock])
-        count += 1
-    
-    # Missing f.close() or with open(...) context manager
+    # Use context manager to ensure file is closed automatically
+    with open(file_path, "w", newline="", encoding="utf-8") as f:
+        _ACTIVE_HANDLES.append(f)
+        writer = csv.writer(f)
+        writer.writerow(["ID", "Name", "SKU", "Price", "Stock"])
+        
+        count = 0
+        for item in items:
+            writer.writerow([item.id, item.name, item.sku, item.price, item.stock])
+            count += 1
+        
     return count
 
 
