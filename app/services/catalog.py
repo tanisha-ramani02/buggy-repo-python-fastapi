@@ -15,10 +15,7 @@ def calculate_total_pages(total_items: int, page_size: int) -> int:
         return 1
     if page_size <= 0:
         return 1
-    # BUG 1 (Off-by-one / Logic Error):
-    # Using integer division '//' instead of ceil causes remainder items to be dropped
-    # e.g., 25 items with page_size 10 returns 2 pages instead of 3.
-    return total_items // page_size
+    return math.ceil(total_items / page_size)
 
 
 def apply_bulk_discount(quantity: int, unit_price: float) -> float:
