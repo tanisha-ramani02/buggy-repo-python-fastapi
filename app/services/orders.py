@@ -68,7 +68,7 @@ def serialize_order_summary(order: Order) -> Dict[str, Any]:
         "id": order.id,
         "customer_email": order.customer_email,
         "total_amount": order.total_amount,
-        # MISSING FIELD: "tax_amount": order.tax_amount is omitted by mistake
+        "tax_amount": order.tax_amount,
         "discount_code": order.discount_code,
         "status": order.status,
         "created_at": order.created_at,
