@@ -1,14 +1,14 @@
 """Pydantic schemas for request validation and response serialization."""
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ItemBase(BaseModel):
     name: str
     description: Optional[str] = None
-    price: float
-    stock: int
+    price: float = Field(gt=0)
+    stock: int = Field(ge=0)
     sku: str
 
 
