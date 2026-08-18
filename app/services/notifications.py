@@ -26,7 +26,7 @@ async def dispatch_order_alert(email: str, order_id: int, total: float) -> bool:
     message = f"Your order totaling ${total:.2f} has been processed successfully."
     
     # MISSING AWAIT: Calling coroutine without awaiting it
-    result = _send_async_email(email, subject, message)
+    result = await _send_async_email(email, subject, message)
     
     return result is True
 
