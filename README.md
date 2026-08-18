@@ -1,1 +1,1 @@
-# buggy-repo-python-fastapi
+buggy repo with some bugs found in pytes, a code with simple python and fastapi, so that the autonomous bug fixer agent can work on it, and identify the gaps and fix it
